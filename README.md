@@ -1,4 +1,4 @@
-# BlindSightAI
+# SightX
 
 ## React + Vite
 
@@ -11,12 +11,12 @@ Getting Started
 #### Clone the repository to your local machine:
 
 ```
-git clone hhttps://github.com/Blind-Sight-AI/blindsightai_client
+git clone https://github.com/rohits-web03/SightX_Client.git
 ```
 #### Navigate to the project directory:
 
 ```
-cd bsai_client
+cd SightX_Client
 ```
 #### Install project dependencies:
 
