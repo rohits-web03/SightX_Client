@@ -191,6 +191,7 @@ const Home = () => {
   };
 
   const voiceNav = async (text) => {
+    temp.current=false;
     text = text.toLowerCase();
     console.log("voice :", text);
     const roadAssist = [
