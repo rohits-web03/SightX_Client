@@ -12,6 +12,7 @@ export function MyProvider({ children }) {
     const isRecording = useRef(false);
     const [coordinates,setCoordinates]=useState({lat:'',long:''});
     const apiBody=useRef({address:'',lat:'',long:''});
+    const [weatherData,setWeatherData]=useState(null);
 
     const getLocation = () => {
       return new Promise((resolve, reject) => {
@@ -70,7 +71,7 @@ export function MyProvider({ children }) {
 
   // Create an object with the data and functions to provide
   const contextValue = {
-    location,setLocation,stopVidRecording,stream,setStream,apiResponse,setApiResponse,videoRef,isRecording,getLocation,coordinates,apiBody
+    weatherData,setWeatherData,location,setLocation,stopVidRecording,stream,setStream,apiResponse,setApiResponse,videoRef,isRecording,getLocation,coordinates,apiBody
   };
 
   return (
