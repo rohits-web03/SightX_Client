@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMyContext } from '../Context';
 
 export default function Weather(props) {
-    const [weatherData,setWeatherData]=useState(null);
-    const {getLocation,apiBody,location}=useMyContext();
+    const {getLocation,apiBody,location,weatherData,setWeatherData}=useMyContext();
     const styles={
         color:'white',
         display:'flex',
@@ -12,6 +11,7 @@ export default function Weather(props) {
     };
     const sendData=()=>{
         // console.log("Location:",location);
+        console.log("fgbhcv");
         if(weatherData){
         props.onDataReceived(weatherData);
         }
@@ -38,6 +38,8 @@ export default function Weather(props) {
             const data = await response.json();
             console.log(JSON.stringify(data));
             setWeatherData(data);
+
+            // sendData();
           } else {
             console.error("Location is null.");
           }
@@ -47,17 +49,32 @@ export default function Weather(props) {
       };
 
       useEffect(()=>{
+        fetchWeather();
+      },[]);
+
+      useEffect(()=>{
         // getLocation();
         // while (!location) {
         //   getLocation();
         // }
-        fetchWeather();
-        if(location && weatherData){
-            sendData();
-        }
-      },[])
+        // fetchWeather();
+        console.log("sdbhd")
+        // console.log("Weather use effect:",weatherData);
+        if(weatherData){
+          console.log("Inside if");
+          sendData();
+      }
+      },[weatherData]);
+
+
+
   return (
     <>
+    </>
+  )
+}
+
+
     {/* <div style={{       
         color:'white',
         display:'flex',
@@ -73,6 +90,3 @@ export default function Weather(props) {
             <p style={{color:'white'}}>{weatherData["clouds"]["all"]}% chance of Rain</p>
         </div>}
     </div> */}
-    </>
-  )
-}
