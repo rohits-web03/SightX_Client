@@ -42,6 +42,8 @@ const Home = () => {
   const [messages, setMessages] = useState([{ text: intro, user: "AI" }]);
   const {
     location,
+    weatherData,
+    setWeatherData,
     setLocation,
     stopVidRecording,
     apiResponse,
@@ -241,7 +243,7 @@ const Home = () => {
         // speakPrompt("Hold your camera upright");
         // speakPrompt("Let's embark on your journey");
         if (apiResponse) {
-          setApiResponse("");
+          setApiResponse(null);
         }
         temp.current=true;
         break;
@@ -303,7 +305,7 @@ const Home = () => {
         break;
       }
     }
-
+    
     for (let i = 0; i < roadAssist.length; i++) {
       const item = roadAssist[i];
       if (text.includes(item)) {
@@ -543,23 +545,32 @@ const Home = () => {
     speakPrompt(`Your Current location is ${data}`);
   };
 
+
+
   const handleWeatherData = async (data) => {
+    const currTemp = data["main"]["temp"];
+    const humidity = data["main"]["humidity"];
+    const clouds = data["clouds"]["all"];         
+    const weatherDescription = data["weather"][0]["description"];
     console.log("weather data",data);
     setMessages((prevMessages) => [
       ...prevMessages,
-      { text: `The temperature is ${Math.round(data["main"]["temp"] - 273)}°C`, user: "AI" },
+      { text: `The current temperature in Kolkata is ${Math.round(currTemp-273)}°C with a humidity of ${humidity}`, user: "AI" },
     ]);
-    await speakPrompt(`The temperature is ${Math.round(data["main"]["temp"] - 273)}°C`);
+    await speakPrompt(`ThcurrTemp in Kolkata is ${Math.round(currTemp-273)}°C with a humidity of ${humidity}`);
     setMessages((prevMessages) => [
       ...prevMessages,
-      { text: `The humidity is ${data["main"]["humidity"]}`, user: "AI" },
+      { text: `The sky is ${weatherDescription} with ${clouds}% cloud coverage.`, user: "AI" },
     ]);
-    await speakPrompt(`The humidity is ${data["main"]["humidity"]}`);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: `There is ${weatherData["clouds"]["all"]} chance of rain`, user: "AI" },
-    ]);
-    await speakPrompt(`There is ${weatherData["clouds"]["all"]} chance of rain`);
+    await speakPrompt(`The sky is ${weatherDescription} with ${clouds}% cloud coverage.`);
+    // setMessages((prevMessages) => [
+    //   ...prevMessages,
+    //   { text: `There is ${data["clouds"]["all"]} chance of rain`, user: "AI" },
+    // ]);
+    // await speakPrompt(`There is ${data["clouds"]["all"]} chance of rain`);
+    if(weatherData){
+      setWeatherData(null);
+    }
   };
 
 
